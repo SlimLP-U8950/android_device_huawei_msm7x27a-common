@@ -32,4 +32,4 @@ LOCAL_SHARED_LIBRARIES += libhwrpc
 $(shell mkdir -p $(OUT)/obj/SHARED_LIBRARIES/libhwrpc_intermediates/)
 $(shell touch $(OUT)/obj/SHARED_LIBRARIES/libhwrpc_intermediates/export_includes)
 
-include $(BUILD_SHARED_LIBRARY)
+#include $(BUILD_SHARED_LIBRARY)

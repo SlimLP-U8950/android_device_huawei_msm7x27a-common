@@ -17,7 +17,7 @@
 
 #include <math.h>
 
-//#define LOG_NDEBUG 0
+#define LOG_NDEBUG 0
 #define LOG_TAG "AudioHardwareMSM76XXA"
 #include <utils/Log.h>
 #include <utils/String8.h>
@@ -128,6 +128,7 @@ static int snd_device = -1;
 static uint32_t SND_DEVICE_CURRENT=-1;
 static uint32_t SND_DEVICE_HANDSET=-1;
 static uint32_t SND_DEVICE_SPEAKER=-1;
+static uint32_t SND_DEVICE_STEREO_SPEAKER=-1;
 static uint32_t SND_DEVICE_BT=-1;
 static uint32_t SND_DEVICE_BT_EC_OFF=-1;
 static uint32_t SND_DEVICE_HEADSET=-1;
@@ -179,6 +180,7 @@ mDirectOutrefCnt(0)
                 CHECK_FOR(CURRENT);
                 CHECK_FOR(HANDSET);
                 CHECK_FOR(SPEAKER);
+                CHECK_FOR(STEREO_SPEAKER);
                 CHECK_FOR(BT);
                 CHECK_FOR(BT_EC_OFF);
                 CHECK_FOR(HEADSET);
@@ -912,6 +914,7 @@ int check_and_set_audpp_parameters(char *buf, int size)
         table_num = strtol(p + 1, &ps, 10);
         if (!(p = strtok(NULL, seps)))
             goto token_err;
+
         /* Table description */
         if (!(p = strtok(NULL, seps)))
             goto token_err;
@@ -990,15 +993,15 @@ int check_and_set_audpp_parameters(char *buf, int size)
 
         /* Table header */
         table_num = strtol(p + 1, &ps, 10);
-        if (!(p = strtok(NULL, seps)))
-            goto token_err;
+
         /* Table description */
         if (!(p = strtok(NULL, seps)))
             goto token_err;
-
         eq_flag[device_id] = (uint16_t)strtol(p, &ps, 16);
+
         if (!(p = strtok(NULL, seps)))
             goto token_err;
+
         ALOGI("EQ flag = %02x.", eq_flag[device_id]);
 
         audioeq = ::dlopen("/system/lib/libaudioeq.so", RTLD_NOW);
@@ -1012,6 +1015,8 @@ int check_and_set_audpp_parameters(char *buf, int size)
         equalizer[device_id].bands = 8;
         for (i = 0; i < equalizer[device_id].bands; i++) {
 
+            if (!(p = strtok(NULL, seps)))
+                goto token_err;
             eq[i].gain = (uint16_t)strtol(p, &ps, 16);
 
             if (!(p = strtok(NULL, seps)))
@@ -1025,9 +1030,6 @@ int check_and_set_audpp_parameters(char *buf, int size)
             if (!(p = strtok(NULL, seps)))
                 goto token_err;
             eq[i].qf = (uint16_t)strtol(p, &ps, 16);
-
-            if (!(p = strtok(NULL, seps)))
-                goto token_err;
 
             eq_cal(eq[i].gain, eq[i].freq, 48000, eq[i].type, eq[i].qf, (int32_t*)numerator, (int32_t *)denominator, shift);
             for (j = 0; j < 6; j++) {
@@ -1266,6 +1268,7 @@ int check_and_set_audpp_parameters(char *buf, int size)
             enable_preproc_mask[samp_index] |= NS_ENABLE;
         }
     }
+    ALOGV("success audp params");
     return 0;
 
 token_err:
@@ -1413,7 +1416,7 @@ static int msm72xx_enable_postproc(bool state)
         return -EINVAL;
     }
 
-    if(snd_device == SND_DEVICE_SPEAKER)
+    if(snd_device == SND_DEVICE_SPEAKER || snd_device == SND_DEVICE_STEREO_SPEAKER)
     {
         device_id = 0;
         ALOGI("set device to SND_DEVICE_SPEAKER device_id=0");
@@ -1682,6 +1685,7 @@ status_t AudioHardware::setMasterVolume(float v)
     ALOGI("Set master volume to %d.\n", vol);
     set_volume_rpc(SND_DEVICE_HANDSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_SPEAKER, SND_METHOD_VOICE, vol, m7xsnddriverfd);
+    set_volume_rpc(SND_DEVICE_STEREO_SPEAKER, SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_BT,      SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_HEADSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
     set_volume_rpc(SND_DEVICE_IN_S_SADC_OUT_HANDSET, SND_METHOD_VOICE, vol, m7xsnddriverfd);
@@ -1948,7 +1952,7 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input, int outputDevice)
             new_post_proc_feature_mask = (ADRC_ENABLE | EQ_ENABLE | RX_IIR_ENABLE | MBADRC_ENABLE);
         }
     }
-
+    
     if (mDualMicEnabled && mMode == AudioSystem::MODE_IN_CALL) {
         if (new_snd_device == SND_DEVICE_HANDSET) {
             ALOGI("Routing audio to handset with DualMike enabled\n");
@@ -1962,6 +1966,11 @@ status_t AudioHardware::doRouting(AudioStreamInMSM72xx *input, int outputDevice)
     if((outputDevices  == 0) && (FmA2dpStatus == true))
        new_snd_device = SND_DEVICE_FM_DIGITAL_BT_A2DP_HEADSET;
 #endif
+
+    if (new_snd_device == SND_DEVICE_SPEAKER && SND_DEVICE_STEREO_SPEAKER >= 0) {
+      ALOGI("Routing audio to Stereo Speakerphone\n");
+      new_snd_device = SND_DEVICE_STEREO_SPEAKER;
+    }
 
     if (new_snd_device != -1 && new_snd_device != mCurSndDevice) {
         ret = doAudioRouteOrMute(new_snd_device);
@@ -2112,6 +2121,13 @@ AudioHardware::AudioStreamInMSM72xx *AudioHardware::getActiveInput_l()
 
     return NULL;
 }
+
+status_t AudioHardware::AudioSessionOutLPA::getPresentationPosition(uint64_t *frames, struct timespec *timestamp)
+{
+    //TODO: enable when supported by driver
+    return INVALID_OPERATION;
+}
+
 #ifdef QCOM_VOIP_ENABLED
 status_t AudioHardware::setupDeviceforVoipCall(bool value)
 {
@@ -3015,13 +3031,13 @@ status_t AudioHardware::AudioStreamOutDirect::getRenderPosition(uint32_t *dspFra
     //TODO: enable when supported by driver
     return INVALID_OPERATION;
 }
+#endif /*QCOM_VOIP_ENABLED*/
 
 status_t AudioHardware::AudioStreamOutDirect::getPresentationPosition(uint64_t *frames, struct timespec *timestamp)
 {
     //TODO: enable when supported by driver
     return INVALID_OPERATION;
 }
-#endif /*QCOM_VOIP_ENABLED*/
 
 // End AudioStreamOutDirect
 
@@ -4108,11 +4124,6 @@ status_t AudioHardware::AudioSessionOutLPA::getRenderPosition(uint32_t *dspFrame
     return INVALID_OPERATION;
 }
 
-status_t AudioHardware::AudioSessionOutLPA::getPresentationPosition(uint64_t *frames, struct timespec *timestamp)
-{
-    //TODO: enable when supported by driver
-    return INVALID_OPERATION;
-}
 
 status_t AudioHardware::AudioSessionOutLPA::getBufferInfo(buf_info **buf) {
 

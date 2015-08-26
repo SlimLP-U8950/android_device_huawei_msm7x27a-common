@@ -221,7 +221,7 @@ public:
     virtual int getAudioPort(struct audio_port *port);
 
     virtual int setAudioPortConfig(const struct audio_port_config *config);
-
+	
     // create I/O streams
     virtual AudioStreamOut* openOutputStream(
                                 uint32_t devices,

@@ -19,10 +19,15 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 # The GPS configuration appropriate for this device.
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
-DEVICE_PACKAGE_OVERLAYS += device/huawei/msm7x27a-common/overlay
+MSM7X27_PATH := device/huawei/msm7x27a-common
+NATIVE_PATH := frameworks/native/data/etc
+
+DEVICE_PACKAGE_OVERLAYS += $(MSM7X27_PATH)/overlay
 
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := hdpi
+
+
 
 # Packages
 PRODUCT_PACKAGES += \
@@ -74,46 +79,46 @@ PRODUCT_PACKAGES += \
 
 # Files
 PRODUCT_COPY_FILES += \
-	device/huawei/msm7x27a-common/rootdir/init.huawei.rc:root/init.huawei.rc \
-	device/huawei/msm7x27a-common/rootdir/init.huawei.usb.rc:root/init.huawei.usb.rc \
-	device/huawei/msm7x27a-common/rootdir/ueventd.huawei.rc:root/ueventd.huawei.rc
+	$(MSM7X27_PATH)/rootdir/init.huawei.rc:root/init.huawei.rc \
+	$(MSM7X27_PATH)/rootdir/init.huawei.usb.rc:root/init.huawei.usb.rc \
+	$(MSM7X27_PATH)/rootdir/ueventd.huawei.rc:root/ueventd.huawei.rc
 
 PRODUCT_COPY_FILES += \
-	device/huawei/msm7x27a-common/configs/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
-	device/huawei/msm7x27a-common/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
-	device/huawei/msm7x27a-common/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-	device/huawei/msm7x27a-common/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
+	$(MSM7X27_PATH)/configs/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
+	$(MSM7X27_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
+	$(MSM7X27_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+	$(MSM7X27_PATH)/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
 PRODUCT_COPY_FILES += \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
-	device/huawei/msm7x27a-common/configs/audio_policy.conf:system/etc/audio_policy.conf \
-	device/huawei/msm7x27a-common/configs/media_codecs.xml:system/etc/media_codecs.xml \
-	device/huawei/msm7x27a-common/configs/media_profiles.xml:system/etc/media_profiles.xml \
-	device/huawei/msm7x27a-common/configs/init.qcom.fm.sh:system/etc/init.qcom.fm.sh \
+	$(MSM7X27_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
+	$(MSM7X27_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
+	$(MSM7X27_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
+	$(MSM7X27_PATH)/configs/init.qcom.fm.sh:system/etc/init.qcom.fm.sh \
 
 
 PRODUCT_COPY_FILES += \
-	device/huawei/msm7x27a-common/idc/qwerty.idc:system/usr/idc/qwerty.idc \
-	device/huawei/msm7x27a-common/idc/qwerty2.idc:system/usr/idc/qwerty2.idc \
-	device/huawei/msm7x27a-common/keychars/7x27a_kp.kcm:system/usr/keychars/7x27a_kp.kcm \
-	device/huawei/msm7x27a-common/keylayout/7x27a_kp.kl:system/usr/keylayout/7x27a_kp.kl \
-	device/huawei/msm7x27a-common/keylayout/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl
+	$(MSM7X27_PATH)/idc/qwerty.idc:system/usr/idc/qwerty.idc \
+	$(MSM7X27_PATH)/idc/qwerty2.idc:system/usr/idc/qwerty2.idc \
+	$(MSM7X27_PATH)/keychars/7x27a_kp.kcm:system/usr/keychars/7x27a_kp.kcm \
+	$(MSM7X27_PATH)/keylayout/7x27a_kp.kl:system/usr/keylayout/7x27a_kp.kl \
+	$(MSM7X27_PATH)/keylayout/surf_keypad.kl:system/usr/keylayout/surf_keypad.kl
 
 # Permissions
 PRODUCT_COPY_FILES += \
-	frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
-	frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-	frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
-	frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
-	frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-	frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-	frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
-	frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
-	frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-	frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
+	$(NATIVE_PATH)/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+	$(NATIVE_PATH)/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
+	$(NATIVE_PATH)/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
+	$(NATIVE_PATH)/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
+	$(NATIVE_PATH)/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
+	$(NATIVE_PATH)/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
+	$(NATIVE_PATH)/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
+	$(NATIVE_PATH)/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+	$(NATIVE_PATH)/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
+	$(NATIVE_PATH)/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
+	$(NATIVE_PATH)/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
 # Properties
 PRODUCT_PROPERTY_OVERRIDES += \

@@ -129,9 +129,11 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 # SELinux
 BOARD_SEPOLICY_DIRS += device/huawei/msm7x27a-common/sepolicy
 
+ifneq ($(PLATFORM_VERSION),6.0)
 BOARD_SEPOLICY_UNION += \
     file_contexts \
     file.te
+endif
 
 # USB
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true

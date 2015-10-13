@@ -1,0 +1,78 @@
+From 60d88eada0643b9214e224de033b03c12572d329 Mon Sep 17 00:00:00 2001
+From: ksrt12 <kazakov12stepan2012@live.ru>
+Date: Mon, 12 Oct 2015 20:43:41 +0600
+Subject: [PATCH] Fix bcmdhd and msm7x27a patches
+
+Change-Id: Ic63e7b326e5af110aaa65fe1b2603c1d6b38d07a
+---
+ arch/arm/mach-msm/acpuclock-7627.c     | 4 ++--
+ drivers/gpu/msm/adreno.c               | 2 +-
+ drivers/gpu/msm/kgsl_mmu.c             | 2 ++
+ drivers/net/wireless/bcmdhd/dhd_wlfc.h | 2 +-
+ 4 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm/mach-msm/acpuclock-7627.c b/arch/arm/mach-msm/acpuclock-7627.c
+index bcd15fc..6b30ce6 100644
+--- a/arch/arm/mach-msm/acpuclock-7627.c
++++ b/arch/arm/mach-msm/acpuclock-7627.c
+@@ -395,7 +395,7 @@ static struct clkctl_acpu_speed pll0_960_pll1_245_pll2_1200_pll4_1152[] = {
+ 	{ 0, 600000, ACPU_PLL_2, 2, 1, 75000, 3, 4, 160000 },
+ 	{ 1, 700800, ACPU_PLL_4, 6, 0, 87500, 3, 4, 160000, &pll4_cfg_tbl[0]},
+ 	{ 1, 1008000, ACPU_PLL_4, 6, 0, 126000, 3, 5, 200000, &pll4_cfg_tbl[1]},
+-	{ 1, 1152000, ACPU_PLL_4, 6, 0, 151200, 3, 6, 200000, &pll4_cfg_tbl[4]},
++	{ 1, 1400000, ACPU_PLL_4, 6, 0, 140800, 3, 6, 200000, &pll4_cfg_tbl[5]},
+ 	{ 0 }
+ };
+ 
+@@ -408,7 +408,7 @@ static struct clkctl_acpu_speed pll0_960_pll1_196_pll2_1200_pll4_1152[] = {
+ 	{ 0, 600000, ACPU_PLL_2, 2, 1, 75000, 3, 4, 160000 },
+ 	{ 1, 700800, ACPU_PLL_4, 6, 0, 87500, 3, 4, 160000, &pll4_cfg_tbl[0]},
+ 	{ 1, 1008000, ACPU_PLL_4, 6, 0, 126000, 3, 5, 200000, &pll4_cfg_tbl[1]},
+-	{ 1, 1152000, ACPU_PLL_4, 6, 0, 151200, 3, 6, 200000, &pll4_cfg_tbl[4]},
++	{ 1, 1400000, ACPU_PLL_4, 6, 0, 140800, 3, 6, 200000, &pll4_cfg_tbl[5]},
+ 	{ 0 }
+ };
+ 
+diff --git a/drivers/gpu/msm/adreno.c b/drivers/gpu/msm/adreno.c
+index 1f76c03..883ddd6 100644
+--- a/drivers/gpu/msm/adreno.c
++++ b/drivers/gpu/msm/adreno.c
+@@ -124,7 +124,7 @@ static struct adreno_device device_3d0 = {
+ 		.pm_dump_enable = 0,
+ 	},
+ 	.gmem_base = 0,
+-	.gmem_size = SZ_256K,
++	.gmem_size = SZ_512K,
+ 	.pfp_fw = NULL,
+ 	.pm4_fw = NULL,
+ 	.wait_timeout = 0, /* in milliseconds, 0 means disabled */
+diff --git a/drivers/gpu/msm/kgsl_mmu.c b/drivers/gpu/msm/kgsl_mmu.c
+index 5a2724d..e721120 100644
+--- a/drivers/gpu/msm/kgsl_mmu.c
++++ b/drivers/gpu/msm/kgsl_mmu.c
+@@ -867,6 +867,8 @@ kgsl_mmu_unmap(struct kgsl_pagetable *pagetable,
+ 	spin_unlock(&pagetable->lock);
+ 	if (!kgsl_memdesc_is_global(memdesc))
+ 		memdesc->priv &= ~KGSL_MEMDESC_MAPPED;
++        else
++        kgsl_mmu_put_gpuaddr(pagetable, memdesc);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(kgsl_mmu_unmap);
+diff --git a/drivers/net/wireless/bcmdhd/dhd_wlfc.h b/drivers/net/wireless/bcmdhd/dhd_wlfc.h
+index 5a64e6f..a36a9c0 100644
+--- a/drivers/net/wireless/bcmdhd/dhd_wlfc.h
++++ b/drivers/net/wireless/bcmdhd/dhd_wlfc.h
+@@ -84,8 +84,8 @@ typedef struct wlfc_hanger {
+ 	uint32 failed_to_push;
+ 	uint32 failed_to_pop;
+ 	uint32 failed_slotfind;
+-	wlfc_hanger_item_t items[1];
+ 	uint32 slot_pos;
++	wlfc_hanger_item_t items[1];
+ } wlfc_hanger_t;
+ 
+ #define WLFC_HANGER_SIZE(n)	((sizeof(wlfc_hanger_t) - \
+-- 
+2.1.4
+

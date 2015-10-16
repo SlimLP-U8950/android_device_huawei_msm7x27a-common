@@ -1,18 +1,19 @@
-From 60d88eada0643b9214e224de033b03c12572d329 Mon Sep 17 00:00:00 2001
+From 4bdeb9244396568c601c40d878e86103e8477ae4 Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Mon, 12 Oct 2015 20:43:41 +0600
+Date: Fri, 16 Oct 2015 21:28:08 +0600
 Subject: [PATCH] Fix bcmdhd and msm7x27a patches
 
-Change-Id: Ic63e7b326e5af110aaa65fe1b2603c1d6b38d07a
+Change-Id: Ib4b5e5b67ea7d4a7c9ec8ff2c274038bcbfdf0a1
 ---
  arch/arm/mach-msm/acpuclock-7627.c     | 4 ++--
- drivers/gpu/msm/adreno.c               | 2 +-
+ arch/arm/mach-msm/devices-msm7x27a.c   | 4 ++--
+ drivers/gpu/msm/adreno.c               | 8 ++++----
  drivers/gpu/msm/kgsl_mmu.c             | 2 ++
  drivers/net/wireless/bcmdhd/dhd_wlfc.h | 2 +-
- 4 files changed, 6 insertions(+), 4 deletions(-)
+ 5 files changed, 11 insertions(+), 9 deletions(-)
 
 diff --git a/arch/arm/mach-msm/acpuclock-7627.c b/arch/arm/mach-msm/acpuclock-7627.c
-index bcd15fc..6b30ce6 100644
+index bcd15fc..3c4043e 100644
 --- a/arch/arm/mach-msm/acpuclock-7627.c
 +++ b/arch/arm/mach-msm/acpuclock-7627.c
 @@ -395,7 +395,7 @@ static struct clkctl_acpu_speed pll0_960_pll1_245_pll2_1200_pll4_1152[] = {
@@ -20,7 +21,7 @@ index bcd15fc..6b30ce6 100644
  	{ 1, 700800, ACPU_PLL_4, 6, 0, 87500, 3, 4, 160000, &pll4_cfg_tbl[0]},
  	{ 1, 1008000, ACPU_PLL_4, 6, 0, 126000, 3, 5, 200000, &pll4_cfg_tbl[1]},
 -	{ 1, 1152000, ACPU_PLL_4, 6, 0, 151200, 3, 6, 200000, &pll4_cfg_tbl[4]},
-+	{ 1, 1400000, ACPU_PLL_4, 6, 0, 140800, 3, 6, 200000, &pll4_cfg_tbl[5]},
++	{ 1, 1450000, ACPU_PLL_4, 6, 0, 140800, 3, 6, 200000, &pll4_cfg_tbl[5]},
  	{ 0 }
  };
  
@@ -29,12 +30,27 @@ index bcd15fc..6b30ce6 100644
  	{ 1, 700800, ACPU_PLL_4, 6, 0, 87500, 3, 4, 160000, &pll4_cfg_tbl[0]},
  	{ 1, 1008000, ACPU_PLL_4, 6, 0, 126000, 3, 5, 200000, &pll4_cfg_tbl[1]},
 -	{ 1, 1152000, ACPU_PLL_4, 6, 0, 151200, 3, 6, 200000, &pll4_cfg_tbl[4]},
-+	{ 1, 1400000, ACPU_PLL_4, 6, 0, 140800, 3, 6, 200000, &pll4_cfg_tbl[5]},
++	{ 1, 1450000, ACPU_PLL_4, 6, 0, 140800, 3, 6, 200000, &pll4_cfg_tbl[5]},
  	{ 0 }
  };
  
+diff --git a/arch/arm/mach-msm/devices-msm7x27a.c b/arch/arm/mach-msm/devices-msm7x27a.c
+index 08b8240..6c40e3f 100644
+--- a/arch/arm/mach-msm/devices-msm7x27a.c
++++ b/arch/arm/mach-msm/devices-msm7x27a.c
+@@ -947,8 +947,8 @@ void __init msm8x25_kgsl_3d0_init(void)
+ 		kgsl_3d0_pdata.strtstp_sleepwake = false;
+ 
+ 		/* 8x25 supports a higher GPU frequency */
+-		kgsl_3d0_pdata.pwrlevel[0].gpu_freq = 320000000;
+-		kgsl_3d0_pdata.pwrlevel[0].bus_freq = 200000000;
++		kgsl_3d0_pdata.pwrlevel[0].gpu_freq = 360000000;
++		kgsl_3d0_pdata.pwrlevel[0].bus_freq = 220000000;
+ 	}
+ }
+ 
 diff --git a/drivers/gpu/msm/adreno.c b/drivers/gpu/msm/adreno.c
-index 1f76c03..883ddd6 100644
+index 1f76c03..01da568 100644
 --- a/drivers/gpu/msm/adreno.c
 +++ b/drivers/gpu/msm/adreno.c
 @@ -124,7 +124,7 @@ static struct adreno_device device_3d0 = {
@@ -46,16 +62,33 @@ index 1f76c03..883ddd6 100644
  	.pfp_fw = NULL,
  	.pm4_fw = NULL,
  	.wait_timeout = 0, /* in milliseconds, 0 means disabled */
+@@ -191,13 +191,13 @@ static const struct {
+ } adreno_gpulist[] = {
+ 	{ ADRENO_REV_A200, 0, 2, ANY_ID, ANY_ID,
+ 		"yamato_pm4.fw", "yamato_pfp.fw", &adreno_a2xx_gpudev,
+-		512, 384, 3, SZ_256K, NO_VER, NO_VER },
++		512, 384, 3, SZ_512K, NO_VER, NO_VER },
+ 	{ ADRENO_REV_A203, 0, 1, 1, ANY_ID,
+ 		"yamato_pm4.fw", "yamato_pfp.fw", &adreno_a2xx_gpudev,
+-		512, 384, 3, SZ_256K, NO_VER, NO_VER },
++		512, 384, 3, SZ_512K, NO_VER, NO_VER },
+ 	{ ADRENO_REV_A205, 0, 1, 0, ANY_ID,
+ 		"yamato_pm4.fw", "yamato_pfp.fw", &adreno_a2xx_gpudev,
+-		512, 384, 3, SZ_256K, NO_VER, NO_VER },
++		512, 384, 3, SZ_512K, NO_VER, NO_VER },
+ 	{ ADRENO_REV_A220, 2, 1, ANY_ID, ANY_ID,
+ 		"leia_pm4_470.fw", "leia_pfp_470.fw", &adreno_a2xx_gpudev,
+ 		512, 384, 3, SZ_512K, NO_VER, NO_VER },
 diff --git a/drivers/gpu/msm/kgsl_mmu.c b/drivers/gpu/msm/kgsl_mmu.c
-index 5a2724d..e721120 100644
+index 5a2724d..1c61d1b 100644
 --- a/drivers/gpu/msm/kgsl_mmu.c
 +++ b/drivers/gpu/msm/kgsl_mmu.c
 @@ -867,6 +867,8 @@ kgsl_mmu_unmap(struct kgsl_pagetable *pagetable,
  	spin_unlock(&pagetable->lock);
  	if (!kgsl_memdesc_is_global(memdesc))
  		memdesc->priv &= ~KGSL_MEMDESC_MAPPED;
-+        else
-+        kgsl_mmu_put_gpuaddr(pagetable, memdesc);
++	else
++	kgsl_mmu_put_gpuaddr(pagetable, memdesc);
  	return 0;
  }
  EXPORT_SYMBOL(kgsl_mmu_unmap);

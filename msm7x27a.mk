@@ -63,11 +63,11 @@ PRODUCT_PACKAGES += \
 	setup_fs
 
 # FM Radio
-#PRODUCT_PACKAGES += \
-#	FM2 \
-#	FMRecord \
-#	libqcomfm_jni \
-#	qcom.fmradio
+PRODUCT_PACKAGES += \
+	FM2 \
+	FMRecord \
+	libqcomfm_jni \
+	qcom.fmradio
 
 #wifi
 PRODUCT_PACKAGES += \

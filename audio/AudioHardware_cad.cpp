@@ -864,32 +864,6 @@ uint32_t AudioHardware::getMvsRateType(uint32_t mvsMode, uint32_t *rateType)
     return ret;
 }
 #endif /*QCOM_VOIP_ENABLED*/
-
-status_t AudioHardware::setMasterMute(bool muted) {
-    return INVALID_OPERATION;
-}
-
-int AudioHardware::createAudioPatch(unsigned int num_sources,
-        const struct audio_port_config *sources,
-        unsigned int num_sinks,
-        const struct audio_port_config *sinks,
-        audio_patch_handle_t *handle) {
-    return INVALID_OPERATION;
-}
-
-int AudioHardware::releaseAudioPatch(audio_patch_handle_t handle) {
-    return INVALID_OPERATION;
-}
-
-int AudioHardware::getAudioPort(struct audio_port *port) {
-    return INVALID_OPERATION;
-}
-
-int AudioHardware::setAudioPortConfig(
-        const struct audio_port_config *config) {
-    return INVALID_OPERATION;
-}
-
 String8 AudioHardware::getParameters(const String8& keys)
 {
     AudioParameter param = AudioParameter(keys);
@@ -1648,13 +1622,6 @@ AudioHardware::AudioStreamInMSM72xx *AudioHardware::getActiveInput_l()
 
     return NULL;
 }
-
-status_t AudioHardware::AudioSessionOutLPA::getPresentationPosition(uint64_t *frames, struct timespec *timestamp)
-{
-    //TODO: enable when supported by driver
-    return INVALID_OPERATION;
-}
-
 #ifdef QCOM_VOIP_ENABLED
 status_t AudioHardware::setupDeviceforVoipCall(bool value)
 {
@@ -2262,12 +2229,6 @@ status_t AudioHardware::AudioStreamOutMSM72xx::getRenderPosition(uint32_t *dspFr
     return INVALID_OPERATION;
 }
 
-status_t AudioHardware::AudioStreamOutMSM72xx::getPresentationPosition(uint64_t *frames, struct timespec *timestamp)
-{
-    //TODO: enable when supported by driver
-    return INVALID_OPERATION;
-}
-
 #ifdef QCOM_VOIP_ENABLED
 AudioHardware::AudioStreamOutDirect::AudioStreamOutDirect() :
     mHardware(0), mFd(-1), mStartCount(0), mRetryCount(0), mStandby(true), mDevices(0),mChannels(AudioSystem::CHANNEL_OUT_MONO),
@@ -2557,12 +2518,6 @@ status_t AudioHardware::AudioStreamOutDirect::getRenderPosition(uint32_t *dspFra
     return INVALID_OPERATION;
 }
 #endif /*QCOM_VOIP_ENABLED*/
-
-status_t AudioHardware::AudioStreamOutDirect::getPresentationPosition(uint64_t *frames, struct timespec *timestamp)
-{
-    //TODO: enable when supported by driver
-    return INVALID_OPERATION;
-}
 
 // End AudioStreamOutDirect
 

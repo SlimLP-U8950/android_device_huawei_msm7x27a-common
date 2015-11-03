@@ -319,14 +319,6 @@ static int out_get_next_write_timestamp(const struct audio_stream_out *stream,
     return out->qcom_out->getNextWriteTimestamp(timestamp);
 }
 
-static int out_get_presentation_position(const struct audio_stream_out *stream,
-                                         uint64_t *frames, struct timespec *timestamp)
-{
-    const struct qcom_stream_out *out =
-        reinterpret_cast<const struct qcom_stream_out *>(stream);
-    return out->qcom_out->getPresentationPosition(frames, timestamp);
-}
-
 /** audio_stream_in implementation **/
 static uint32_t in_get_sample_rate(const struct audio_stream *stream)
 {
@@ -585,7 +577,6 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
     out->stream.write = out_write;
     out->stream.get_render_position = out_get_render_position;
     out->stream.get_next_write_timestamp = out_get_next_write_timestamp;
-    out->stream.get_presentation_position = out_get_presentation_position;
     out->stream.start = out_start;
     out->stream.pause = out_pause;
     out->stream.flush = out_flush;

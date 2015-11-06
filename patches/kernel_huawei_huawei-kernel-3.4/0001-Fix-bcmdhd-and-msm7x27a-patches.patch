@@ -1,27 +1,36 @@
-From 4bdeb9244396568c601c40d878e86103e8477ae4 Mon Sep 17 00:00:00 2001
+From b11bdc465e3865d2df2be13719fa6b7653ef3f6a Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Fri, 16 Oct 2015 21:28:08 +0600
+Date: Fri, 6 Nov 2015 18:27:35 +0600
 Subject: [PATCH] Fix bcmdhd and msm7x27a patches
 
-Change-Id: Ib4b5e5b67ea7d4a7c9ec8ff2c274038bcbfdf0a1
+Change-Id: I3313c764a589a9650109c7d9c27056b1e5970c33
 ---
- arch/arm/mach-msm/acpuclock-7627.c     | 4 ++--
+ arch/arm/mach-msm/acpuclock-7627.c     | 6 +++---
  arch/arm/mach-msm/devices-msm7x27a.c   | 4 ++--
  drivers/gpu/msm/adreno.c               | 8 ++++----
  drivers/gpu/msm/kgsl_mmu.c             | 2 ++
  drivers/net/wireless/bcmdhd/dhd_wlfc.h | 2 +-
- 5 files changed, 11 insertions(+), 9 deletions(-)
+ 5 files changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm/mach-msm/acpuclock-7627.c b/arch/arm/mach-msm/acpuclock-7627.c
-index bcd15fc..3c4043e 100644
+index bcd15fc..48edad9 100644
 --- a/arch/arm/mach-msm/acpuclock-7627.c
 +++ b/arch/arm/mach-msm/acpuclock-7627.c
+@@ -89,7 +89,7 @@ static struct pll_config pll4_cfg_tbl[] = {
+ 	[1] = {  52, 1, 2 }, /* 1008 MHz */
+ 	[2] = {  63, 0, 1 }, /* 1209.6 MHz */
+ 	[3] = {  73, 0, 1 }, /* 1401.6 MHz */
+-	[4] = {  60, 0, 1 }, /* 1152 MHz */
++	[4] = {  59, 0, 1 }, /* 1132.8 MHz */
+ 	[5] = {  57, 1, 2 }, /* 1104 MHz */
+ #ifdef CONFIG_CHIL360_OC
+         [6] = { 54, 1, 2 }, /* 1046.7 MHz */
 @@ -395,7 +395,7 @@ static struct clkctl_acpu_speed pll0_960_pll1_245_pll2_1200_pll4_1152[] = {
  	{ 0, 600000, ACPU_PLL_2, 2, 1, 75000, 3, 4, 160000 },
  	{ 1, 700800, ACPU_PLL_4, 6, 0, 87500, 3, 4, 160000, &pll4_cfg_tbl[0]},
  	{ 1, 1008000, ACPU_PLL_4, 6, 0, 126000, 3, 5, 200000, &pll4_cfg_tbl[1]},
 -	{ 1, 1152000, ACPU_PLL_4, 6, 0, 151200, 3, 6, 200000, &pll4_cfg_tbl[4]},
-+	{ 1, 1450000, ACPU_PLL_4, 6, 0, 140800, 3, 6, 200000, &pll4_cfg_tbl[5]},
++	{ 1, 1132800, ACPU_PLL_4, 6, 0, 151200, 3, 5, 200000, &pll4_cfg_tbl[4]},
  	{ 0 }
  };
  
@@ -30,7 +39,7 @@ index bcd15fc..3c4043e 100644
  	{ 1, 700800, ACPU_PLL_4, 6, 0, 87500, 3, 4, 160000, &pll4_cfg_tbl[0]},
  	{ 1, 1008000, ACPU_PLL_4, 6, 0, 126000, 3, 5, 200000, &pll4_cfg_tbl[1]},
 -	{ 1, 1152000, ACPU_PLL_4, 6, 0, 151200, 3, 6, 200000, &pll4_cfg_tbl[4]},
-+	{ 1, 1450000, ACPU_PLL_4, 6, 0, 140800, 3, 6, 200000, &pll4_cfg_tbl[5]},
++	{ 1, 1132800, ACPU_PLL_4, 6, 0, 151200, 3, 5, 200000, &pll4_cfg_tbl[4]},
  	{ 0 }
  };
  
@@ -108,4 +117,3 @@ index 5a64e6f..a36a9c0 100644
  #define WLFC_HANGER_SIZE(n)	((sizeof(wlfc_hanger_t) - \
 -- 
 2.1.4
-

@@ -1,20 +1,20 @@
-From 4545a607a1c5da1c687d18c80015ee446c3e01c1 Mon Sep 17 00:00:00 2001
+From 4ede065573ca767a08925663a90d3b706837f8b0 Mon Sep 17 00:00:00 2001
 From: ksrt12 <kazakov12stepan2012@live.ru>
-Date: Mon, 2 Nov 2015 20:35:04 +0600
+Date: Sat, 7 Nov 2015 13:17:07 +0600
 Subject: [PATCH] add u8950 defconfig
 
-Change-Id: Ibef8d637cbfebef813bbe6ccbbc7726e55314685
+Change-Id: I9a89de90fb4779828fa078e829811a62363ac293
 ---
- arch/arm/configs/u8950_defconfig | 3478 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 3478 insertions(+)
+ arch/arm/configs/u8950_defconfig | 3477 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 3477 insertions(+)
  create mode 100644 arch/arm/configs/u8950_defconfig
 
 diff --git a/arch/arm/configs/u8950_defconfig b/arch/arm/configs/u8950_defconfig
 new file mode 100644
-index 0000000..ed0d195
+index 0000000..3becb4d
 --- /dev/null
 +++ b/arch/arm/configs/u8950_defconfig
-@@ -0,0 +1,3478 @@
+@@ -0,0 +1,3477 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
 +# Linux/arm 3.4.110 Kernel Configuration
@@ -697,7 +697,6 @@ index 0000000..ed0d195
 +# CONFIG_USE_USER_ACCESSIBLE_TIMERS is not set
 +CONFIG_ZSMALLOC=y
 +# CONFIG_PGTABLE_MAPPING is not set
-+# CONFIG_DYNAMIC_PAGE_WRITEBACK is not set
 +# CONFIG_ARCH_MEMORY_PROBE is not set
 +# CONFIG_ARCH_MEMORY_REMOVE is not set
 +# CONFIG_ARCH_POPULATES_NODE_MAP is not set
@@ -3494,5 +3493,5 @@ index 0000000..ed0d195
 +# CONFIG_AVERAGE is not set
 +# CONFIG_CORDIC is not set
 -- 
-2.5.0
+2.1.4
 

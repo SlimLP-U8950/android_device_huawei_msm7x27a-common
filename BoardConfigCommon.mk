@@ -104,7 +104,7 @@ BOARD_PAGE_SIZE := 2048
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 TARGET_KERNEL_SOURCE := kernel/huawei/huawei-kernel-3.4
 endif
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9-15.05/bin/arm-linux-gnueabihf-
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-5.1-15.08/bin/arm-linux-gnueabihf-
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01800000
 
 # Lights

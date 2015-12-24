@@ -43,6 +43,7 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 # Low RAM settings
 MALLOC_IMPL := dlmalloc
 TARGET_BOOTANIMATION_TEXTURE_CACHE := false
+TARGET_BOOTANIMATION_HALF_RES := true
 
 # Qualcomm hardware
 BOARD_USES_QCOM_HARDWARE := true
@@ -104,7 +105,7 @@ BOARD_PAGE_SIZE := 2048
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 TARGET_KERNEL_SOURCE := kernel/huawei/huawei-kernel-3.4
 endif
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9-15.05/bin/arm-linux-gnueabihf-
+#TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9-15.05/bin/arm-linux-gnueabihf-
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01800000
 
 # Lights
@@ -131,8 +132,8 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 # SELinux
 BOARD_SEPOLICY_DIRS += device/huawei/msm7x27a-common/sepolicy
 BOARD_SEPOLICY_UNION += \
-    file_contexts \
-    file.te
+	file_contexts \
+	file.te
 
 # USB
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true

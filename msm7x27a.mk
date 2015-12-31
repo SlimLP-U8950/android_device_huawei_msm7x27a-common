@@ -141,7 +141,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	debug.hwc.fakevsync=1 \
 	ro.max.fling_velocity=4000 \
 	ro.opengles.version=131072 \
-	ro.sf.lcd_density=240
+	ro.sf.lcd_density=240 \
+	wlan.driver.status=ok
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	dalvik.vm.heapgrowthlimit=52m \

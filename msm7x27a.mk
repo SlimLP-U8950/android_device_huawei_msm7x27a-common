@@ -133,7 +133,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	debug.egl.recordable.rgba8888=1 \
-	debug.composition.type=dyn \
+	debug.composition.type=c2d \
 	debug.hwc.dynThreshold=1.9 \
 	persist.hwc.mdpcomp.enable=false \
 	debug.mdpcomp.logs=0 \
@@ -142,7 +142,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.max.fling_velocity=4000 \
 	ro.opengles.version=131072 \
 	ro.sf.lcd_density=240 \
-	wlan.driver.status=ok
+	wlan.driver.status=ok \
+	pm.sleep_mode=4
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	dalvik.vm.heapgrowthlimit=52m \

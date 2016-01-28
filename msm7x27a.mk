@@ -62,12 +62,9 @@ PRODUCT_PACKAGES += \
 	make_ext4fs \
 	setup_fs
 
-# FM Radio
-#PRODUCT_PACKAGES += \
-#	FM2 \
-#	FMRecord \
-#	libqcomfm_jni \
-#	qcom.fmradio
+# Music
+PRODUCT_PACKAGES += \
+	Music
 
 #wifi
 PRODUCT_PACKAGES += \

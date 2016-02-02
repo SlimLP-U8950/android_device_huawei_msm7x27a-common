@@ -161,16 +161,13 @@ on boot
     write /sys/block/mmcblk1/queue/add_random 0
 
     # Enable KSM
-    write /sys/kernel/mm/ksm/run 0
+    write /sys/kernel/mm/ksm/run 1
     write /sys/kernel/mm/ksm/deferred_timer 1
     write /sys/kernel/mm/ksm/sleep_millisecs 1500
     write /sys/kernel/mm/ksm/pages_to_scan 256
 
     # Enable sysrq
     write /proc/sys/kernel/sysrq 1
-
-    # Run sysinit
-    start sysinit
 
 on fs
     # mount mmc partitions

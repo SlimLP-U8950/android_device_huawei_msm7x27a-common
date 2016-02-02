@@ -139,7 +139,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.max.fling_velocity=4000 \
 	ro.opengles.version=131072 \
 	ro.sf.lcd_density=240 \
-	wlan.driver.status=ok \
 	pm.sleep_mode=4
 
 PRODUCT_PROPERTY_OVERRIDES += \

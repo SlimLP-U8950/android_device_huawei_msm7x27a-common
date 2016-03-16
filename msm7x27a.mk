@@ -139,8 +139,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.max.fling_velocity=12000 \
 	ro.min.fling_velocity=8000 \
 	ro.opengles.version=131072 \
-	ro.sf.lcd_density=240 \
-	pm.sleep_mode=0 
+	ro.sf.lcd_density=260 \
+	pm.sleep_mode=4 
 
 # pm.sleep_mode=0 - test for deep sleep bug 
 
@@ -213,7 +213,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	mm.enable.smoothstreaming=true \
-	persist.sys.root_access=4
+	persist.sys.root_access=3
 
 # Newer camera API isn't supported.
 PRODUCT_PROPERTY_OVERRIDES += \

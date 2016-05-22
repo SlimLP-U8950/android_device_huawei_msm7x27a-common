@@ -130,7 +130,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	debug.egl.recordable.rgba8888=1 \
-	debug.composition.type=dyn \
+	debug.composition.type=mdp \
 	debug.hwc.dynThreshold=1.9 \
 	persist.hwc.mdpcomp.enable=false \
 	debug.mdpcomp.logs=0 \
@@ -139,8 +139,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.max.fling_velocity=12000 \
 	ro.min.fling_velocity=8000 \
 	ro.opengles.version=131072 \
-	ro.sf.lcd_density=260 \
-	pm.sleep_mode=4 
+	ro.sf.lcd_density=241
+	#pm.sleep_mode=4 
 
 # pm.sleep_mode=0 - test for deep sleep bug 
 
@@ -198,7 +198,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dexopt-flags=v=n,o=v \
     persist.android.strictmode=0 \
     persist.sys.scrollingcache=3 \
-    persist.sys.composition.type=dyn \
+    persist.sys.composition.type=mdp \
     ro.ril.hep=1
 
 # Stagefright

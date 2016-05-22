@@ -45,14 +45,25 @@ PRODUCT_PACKAGES += \
 	hwcomposer.msm7x27a \
 	libtilerenderer
 
+
+
+ifeq ($(BUILD_FOR_TEST),true)
+PRODUCT_PACKAGES += \
+    libstagefrighthw \
+    libOmxCore \
+    libOmxVdec \
+    libOmxVenc \
+    libc2dcolorconvert
+else
 PRODUCT_PACKAGES += \
 	libmm-omxcore \
 	libOmxCore \
 	libstagefrighthw
+endif
 
 PRODUCT_PACKAGES += \
 	gps.msm7x27a
-
+	
 PRODUCT_PACKAGES += \
 	camera.msm7x27a
 

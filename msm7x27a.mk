@@ -45,21 +45,10 @@ PRODUCT_PACKAGES += \
 	hwcomposer.msm7x27a \
 	libtilerenderer
 
-
-
-ifeq ($(BUILD_FOR_TEST),true)
 PRODUCT_PACKAGES += \
-    libstagefrighthw \
+    libmm-omxcore \
     libOmxCore \
-    libOmxVdec \
-    libOmxVenc \
-    libc2dcolorconvert
-else
-PRODUCT_PACKAGES += \
-	libmm-omxcore \
-	libOmxCore \
-	libstagefrighthw
-endif
+    libstagefrighthw
 
 PRODUCT_PACKAGES += \
 	gps.msm7x27a
@@ -141,7 +130,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	debug.egl.recordable.rgba8888=1 \
-	debug.composition.type=mdp \
+	debug.composition.type=dyn \
 	debug.hwc.dynThreshold=1.9 \
 	persist.hwc.mdpcomp.enable=false \
 	debug.mdpcomp.logs=0 \
@@ -151,9 +140,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.min.fling_velocity=8000 \
 	ro.opengles.version=131072 \
 	ro.sf.lcd_density=241
-	#pm.sleep_mode=4 
-
-# pm.sleep_mode=0 - test for deep sleep bug 
 
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapstartsize=5m \
@@ -209,7 +195,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dexopt-flags=v=n,o=v \
     persist.android.strictmode=0 \
     persist.sys.scrollingcache=3 \
-    persist.sys.composition.type=mdp \
+    persist.sys.composition.type=dyn \
     ro.ril.hep=1
 
 # Stagefright

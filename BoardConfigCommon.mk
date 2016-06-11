@@ -87,7 +87,7 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_SHOW_PERCENTAGE := true
-
+BOARD_EGL_CFG := device/huawei/msm7x27a-common/configs/egl.cfg
 # FM
 #AUDIO_FEATURE_ENABLED_FM := true
 

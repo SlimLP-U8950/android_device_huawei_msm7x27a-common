@@ -38,6 +38,11 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
 	libgenlock \
+	libmemalloc \
+	liboverlay \
+	libqdutils \
+	libqservice \
+	libtilerenderer \
 	copybit.msm7x27a \
 	gralloc.msm7x27a \
 	libqdMetaData \

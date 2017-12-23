@@ -36,19 +36,12 @@ PRODUCT_PACKAGES += \
 	audio.usb.default \
 	libaudioutils
 
+# Display HAL
 PRODUCT_PACKAGES += \
-	libgenlock \
-	libmemalloc \
-	liboverlay \
-	libqdutils \
-	libqservice \
-	libtilerenderer \
-	copybit.msm7x27a \
-	gralloc.msm7x27a \
-	libqdMetaData \
-	memtrack.msm7x27a \
-	hwcomposer.msm7x27a \
-	libtilerenderer
+    gralloc.msm7x27a \
+    copybit.msm7x27a \
+    libqdMetaData \
+    memtrack.msm7x27a
 
 PRODUCT_PACKAGES += \
     libmm-omxcore \
@@ -145,6 +138,20 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.min.fling_velocity=8000 \
 	ro.opengles.version=131072 \
 	ro.sf.lcd_density=241
+	
+# IPv6 tethering
+PRODUCT_PACKAGES += \
+    ebtables \
+    ethertypes
+    
+# Data
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.use_data_netmgrd=true \
+    persist.data.ds_fmc_app.mode=0
+    
+# Use Hardware Rendering
+PRODUCT_PROPERTY_OVERRIDES += \
+	debug.sf.hw=1
 
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapstartsize=5m \
@@ -183,8 +190,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.config.low_ram=true \
 	config.disable_atlas=true \
 	persist.sys.force_highendgfx=true \
-	ro.config.max_starting_bg=6 \
+	ro.config.max_starting_bg=1 \
 	ro.sys.fw.bg_apps_limit=8
+
+ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0
+ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=0
+ADDITIONAL_DEFAULT_PROPERTIES += security.perf_harden=0
+ADDITIONAL_DEFAULT_PROPERTIES += ro.allow.mock.location=1
 
 # Strict mode
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -202,6 +214,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.scrollingcache=3 \
     persist.sys.composition.type=dyn \
     ro.ril.hep=1
+
+# SIM
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.service.factory.enable=0 \
+    persist.radio.apm_sim_not_pwdn=1
 
 # Stagefright
 PRODUCT_PROPERTY_OVERRIDES += \
